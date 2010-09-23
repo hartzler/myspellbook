@@ -1,0 +1,53 @@
+body {
+  font-family: verdana;
+  background: black;
+}
+h3 { color: white; }
+#header {
+  background: #884444;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+#controls {
+  background: #dddddd;
+  font-size: 8pt;
+}
+#links { color: #dddddd; }
+#links a { color: #dddddd; }
+#links a:visited { color: #dddddd; }
+div.level {
+  color: white;
+  clear: both;
+}
+div.endlevel { clear: both; }
+div.spell {
+  font-size: 10pt;
+  color: black;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: #cccccc;
+  margin: 0.5em;
+  padding: 0.5em;
+  border: 1 solid #cccccc;
+  float: left;
+  width: 200px;
+  height: 20em;
+  overflow: auto;
+}
+div.spell .control {
+  font-size: 8pt;
+  color: #888888;
+}
+div.spell .name { font-size: 12pt; }
+div.spell .description { font-size: 8pt; }
+input.ready { width: 2em; }
+div.spell.abjuration { background: #99cc99; }
+div.spell.conjuration { background: #99cccc; }
+div.spell.enchantment { background: #cc99cc; }
+div.spell.evocation { background: #ff6666; }
+div.spell.divination { background: #669999; }
+div.spell.illusion { background: #996699; }
+div.spell.transmutation { background: #999966; }
+div.spell.universal { background: #eeeeee; }

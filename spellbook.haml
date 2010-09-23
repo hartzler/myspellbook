@@ -1,0 +1,31 @@
+%html
+  %head
+    %script(src="jquery.js")
+    %script(src="gears_init.js")
+    %script(src="spellbook.js")
+    %link(href="spellbook.css" rel="stylesheet" type="text/css")
+  %body
+    #header
+      Spellbook:
+      %select(id='book')
+        %option main
+        %option secondary
+        %option scrolls
+    #controls
+      Filter:
+      %select(id='view')
+        %option memorized
+        %option known
+        %option all
+      Show:
+      - [:abjuration,:conjuration,:enchantment,:evocation,:divination,:illusion,:necromancy,:transmutation,:universal].each do |school|
+        = school
+        %input(type="checkbox" value=school class=school checked=true)
+    #links
+      Level: 
+      - (0..9).each do |level|
+        %a(href="#a-#{level}")= level
+    #spells
+      = open("spells.partial"){|f| f.read}
+    #footer
+

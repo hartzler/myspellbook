@@ -1,0 +1,16 @@
+.spell(id=spell_id class=classes)
+  .control
+    Known:
+    %input.known(type='checkbox')
+    Memorized:
+    %input.memorized(type='checkbox')
+    %input.ready(type='text')
+  .name=name + " (#{wiz})"
+  .school=school
+  .components=components
+  .time=casting_time
+  .range=range
+  .duration=duration
+  .save=saving_throw
+  .description=description
+

@@ -1,0 +1,98 @@
+.rounded_corners (@radius: 5px) {
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  border-radius: @radius;
+}
+
+body {
+  font-family: verdana;
+	background: black;
+}
+
+h3 {
+  color: white;
+}
+
+#header {
+  background: #844;
+  .rounded_corners;
+}
+
+#controls {
+  background: #ddd;
+	font-size: 8pt;
+}
+
+#links {
+  color: #ddd;
+}
+
+#links a, #links a:visited {
+  color: #ddd;
+}
+
+#footer {
+}
+
+div.level {
+  color: white;
+  clear: both;
+}
+div.endlevel {
+  clear: both;
+}
+
+div.spell {
+  font-size: 10pt;
+  color: black;
+  .rounded_corners;
+  background: #ccc;
+  margin: .5em;
+	padding: .5em;
+	border: 1 solid #ccc;
+	float: left;
+	width: 200px;
+	height: 20em;
+  overflow: auto;
+}
+
+div.spell .control {
+  font-size: 8pt;
+	color: #888;
+}
+
+div.spell .name{
+  font-size: 12pt;
+}
+div.spell .description{
+  font-size: 8pt;
+}
+input.ready {
+  width: 2em;
+}
+
+div.spell.abjuration {
+  background: #9c9;
+}
+div.spell.conjuration {
+  background: #9cc;
+}
+div.spell.enchantment {
+  background: #c9c;
+}
+div.spell.evocation{
+  background: #f66;
+}
+div.spell.divination {
+  background: #699;
+}
+div.spell.illusion {
+  background: #969;
+}
+div.spell.transmutation {
+  background: #996;
+}
+div.spell.universal {
+  background: #eee;
+}
+
