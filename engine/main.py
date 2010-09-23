@@ -20,11 +20,11 @@ from google.appengine.ext.webapp import util
 
 class MainHandler(webapp.RequestHandler):
     def get(self):
-        self.response.out.write('Hello world!')
+		  self.redirect('/content/index.html')
 
 
 def main():
-    application = webapp.WSGIApplication([('/', MainHandler)],
+    application = webapp.WSGIApplication([('/.*', MainHandler)],
                                          debug=True)
     util.run_wsgi_app(application)
 
