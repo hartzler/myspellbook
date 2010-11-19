@@ -3,14 +3,7 @@
     Known:
     %input.known(type='checkbox')
     Memorized:
-    %input.memorized(type='checkbox')
     %input.ready(type='text')
-  .name=name + " (#{wiz})"
-  .school=school
-  .components=components
-  .time=casting_time
-  .range=range
-  .duration=duration
-  .save=saving_throw
-  .description=description
-
+  .name=name + " (#{level})"
+  - [:school,:components,:casting_time,:targets,:range,:duration,:saving_throw,:description].each do |field|
+    %div(class=field)= send(field) 

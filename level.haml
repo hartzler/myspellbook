@@ -1,0 +1,12 @@
+.level(id="level-#{level}")
+  %a(id="a-level-#{level}")
+    %h3== Level #{level}
+    .stats      
+      Known:
+      %span.known_count 0
+      \|
+      Memorized:
+      %span.ready_count 0
+  - spells.each do |spell|
+    = partial.render(spell)
+  .endlevel

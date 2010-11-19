@@ -9,7 +9,6 @@ var SB = {
 		$('#book').bind('change',SB.load_state);
 		$('#controls input').live('change',SB.filter_school);
 		SB.db.open("spells");
-		//SB.db.execute("drop table if exists " + spell_table);
 		SB.db.execute("create table if not exists " + spell_table + " (book text, name text, known int, memorized int, ready int, PRIMARY KEY(book,name))");
 
 		$('#view').val('all');
@@ -69,17 +68,30 @@ var SB = {
 	},
 	known: function(e) {
 	  SB.update_spell_state(e,'known');
+    SB.update_known_counter($(e.target).closest(".level"));
 	},
 	ready: function(e) {
-	  SB.update($(e.target).closest(".spell").attr('id'));
+    var ready = $(e.target);
+    var val = parseInt(ready.val());
+    ready.closest(".spell").find(".memorized").attr('checked', !isNaN(val)&&val>0);
+	  SB.update(ready.closest(".spell").attr('id'));
+    SB.update_ready_counter(ready.closest(".level"));
 	},
+  update_known_counter: function(lvl) {
+    lvl.find('.known_count').html( lvl.find('.known:checked').size() );
+  },
+  update_ready_counter: function(lvl) {
+    var count=0;
+    lvl.find('.ready').each(function(){ 
+      var val = parseInt($(this).val());
+      count += isNaN(val) ? 0 : val;
+    });
+    lvl.find('.ready_count').html(count);
+  },
 	update_spell_state: function(e,class) {
 		var cb = $(e.target);
 		var sp = cb.closest(".spell");
-		if(cb.is(":checked"))
-		  sp.addClass(class);
-    else
-		  sp.removeClass(class);
+		sp.toggleClass(class,cb.is(":checked"));
 		SB.update(sp.attr('id'));
 	},
 	refresh_view: function(e) {
@@ -95,6 +107,10 @@ var SB = {
 		else {
 		  $('#spells .spell').show();
 		}
+    $('.level').each(function(){ 
+      SB.update_known_counter($(this));
+      SB.update_ready_counter($(this));
+    });
 	}
 };
 

@@ -14,7 +14,11 @@ def h(s)
   s.to_s.gsub("<","&lt;").gsub(">","&gt;").gsub("&","&amp;")
 end
 
-haml=Haml::Engine.new(open("spell.haml"){|f| f.read})
+klass = ARGV[0].to_sym
+
+
+haml=Haml::Engine.new(open("level.haml"){|f| f.read})
+partial=Haml::Engine.new(open("spell.haml"){|f| f.read})
 
 spells = []
 FasterCSV.foreach("data.csv") do |row|
@@ -26,31 +30,35 @@ FasterCSV.foreach("data.csv") do |row|
 		data = {}
 		row.size.times{|i| data[headers[i]] = row[i] }
 
-    next unless data[:wiz] =~ /[0-9]/
-    next unless data[:source] =~ /Core/
+    next unless data[klass] =~ /[0-9]/
+    next unless data[:source] =~ /Core|APG/
 
 
     scope=OpenStruct.new(data)
     scope.spell_id = 'spell-' + data[:name].downcase.gsub(" ",'-')
 		scope.description = h(scope.description).gsub("\n","<br>")
+    scope.level = scope.send(klass)
 		sources = []
 		sources << 'core' if scope.source =~ /Core/
 		sources << 'apg' if scope.source =~ /APG/
-		scope.classes = ([scope.school, :wiz,'wiz-%d'%scope.wiz,  ]+sources).compact.join(" ")
+		scope.classes = ([scope.school, klass,'%s-%d'%[klass,scope.level],  ]+sources).compact.join(" ")
 		 
 		spells << scope
 
 	end
 end
 
-bylevel = spells.inject({}){|h,f|(h[f.wiz]||=[])<<f; h}
+bylevel = spells.inject({}){|h,f|(h[f.send(klass)]||=[])<<f; h}
 bylevel.keys.sort.each do |level|
-  puts "<a id=\"a-#{level}\"><h3>Level #{level}</h3></a>"
-  puts "<div id=\"level-#{level}\" class=\"level\">"
-  bylevel[level].each do |scope|
-    puts haml.render(scope)
-  end
-	puts "<div class=\"endlevel\"></div></div>"
+  scope = OpenStruct.new(:level=>level,:spells=>bylevel[level],:partial=>partial)
+  puts haml.render(scope)
+#  puts "<div id=\"level-#{level}\" class=\"level\">"
+#  puts "<a id=\"a-#{level}\"><h3>Level #{level} <span class=\"known_count\"></span></h3></a>"
+#  bylevel[level].each do |scope|
+#    scope.level = level
+#    puts haml.render(scope)
+#  end
+#	puts "<div class=\"endlevel\"></div></div>"
 end
 
 
