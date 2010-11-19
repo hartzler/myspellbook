@@ -1,3 +1,8 @@
+function console_log(s) {
+  if(console!=undefined) {
+    console.log(s);
+  } 
+}
 var spell_table = 'spells';
 var SB = {
   init: function() {
@@ -29,7 +34,7 @@ var SB = {
 			var known = rs.field(1)==1;
 			var ready = parseInt(rs.field(3) || 0);
       var memorized = !isNaN(ready)&&ready>0;
-			console.log("book: " + book + " name: " + name + " known " + known + " memorized " + memorized + ' ready ' + ready);
+			console_log("book: " + book + " name: " + name + " known " + known + " memorized " + memorized + ' ready ' + ready);
 			var spell = $('#'+name);
 			if(known) 
 				spell.addClass("known");			
@@ -52,7 +57,7 @@ var SB = {
 		var known = p.find(".known").is(":checked") ? 1 : 0;
 		var ready = p.find(".ready").val();
     var memorized = 0;
-		console.log("update: " + " book " + book + " name " + name + " known " + known + " memorized " + memorized + " ready " + ready);
+		console_log("update: " + " book " + book + " name " + name + " known " + known + " memorized " + memorized + " ready " + ready);
 		SB.db.execute("replace into spells (book,name,known,memorized,ready) values (?,?,?,?,?)",[book,name,known,memorized,ready]);
   },	
 	filter_school: function(e) {
