@@ -2,7 +2,6 @@ var spell_table = 'spells';
 var SB = {
   init: function() {
     SB.db = google.gears.factory.create('beta.database');
-	  $('#spells input:checkbox.memorized').live('change',SB.memorized);
 	  $('#spells input:checkbox.known').live('change',SB.known);
 	  $('#spells input.ready').live('change',SB.ready);
 		$('#view').bind('change',SB.refresh_view);
@@ -17,8 +16,10 @@ var SB = {
 	load_state: function() {
 		// init states
 		var book = $("#book").val();
-		$(".spell .known").val(null);
-		$(".spell .memorized").val(null);
+		$(".level .known_count").val(0);
+		$(".spell .known").attr('checked',false);
+		$(".level .ready_count").val(0);
+		$(".spell .ready").val(null);
 		$(".spell").removeClass("known");
 		$(".spell").removeClass("memorized");
 	  var rs = SB.db.execute("select name,known,memorized,ready from spells where book = ?",[book]);
@@ -26,8 +27,8 @@ var SB = {
 		while(rs.isValidRow()) {
 		  var name = rs.field(0);
 			var known = rs.field(1)==1;
-			var memorized = rs.field(2)==1;
-			var ready = rs.field(3) || 0;
+			var ready = parseInt(rs.field(3) || 0);
+      var memorized = !isNaN(ready)&&ready>0;
 			console.log("book: " + book + " name: " + name + " known " + known + " memorized " + memorized + ' ready ' + ready);
 			var spell = $('#'+name);
 			if(known) 
@@ -39,7 +40,6 @@ var SB = {
 				spell.addClass("memorized");
 			else
 				spell.removeClass("memorized");			
-		  spell.find(".memorized").attr('checked',memorized);
 		  spell.find(".ready").val(ready);
    		rs.next();
 		}
@@ -50,8 +50,8 @@ var SB = {
 		var book = $("#book").val();
 		var p = $("#" + name)
 		var known = p.find(".known").is(":checked") ? 1 : 0;
-		var memorized = p.find(".memorized").is(":checked") ? 1 : 0;
 		var ready = p.find(".ready").val();
+    var memorized = 0;
 		console.log("update: " + " book " + book + " name " + name + " known " + known + " memorized " + memorized + " ready " + ready);
 		SB.db.execute("replace into spells (book,name,known,memorized,ready) values (?,?,?,?,?)",[book,name,known,memorized,ready]);
   },	
@@ -72,8 +72,6 @@ var SB = {
 	},
 	ready: function(e) {
     var ready = $(e.target);
-    var val = parseInt(ready.val());
-    ready.closest(".spell").find(".memorized").attr('checked', !isNaN(val)&&val>0);
 	  SB.update(ready.closest(".spell").attr('id'));
     SB.update_ready_counter(ready.closest(".level"));
 	},
