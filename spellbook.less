@@ -41,7 +41,42 @@ div.level {
 div.endlevel {
   clear: both;
 }
-
+div.memorized_spells {
+  clear: both;
+}
+div.all_spells {
+  clear: both;
+}
+div.known_spells {
+  clear: both;
+}
+div.memorized_spells .learn {
+  display: none; 
+}
+div.known_spells .learn {
+  display: none; 
+}
+div.all_spells .learn{
+  display: inline;
+}
+div.memorized_spells .memorize {
+  display: none;
+}
+div.known_spells .memorize {
+  display: inline;
+}
+div.all_spells .memorize {
+  display: none; 
+}
+div.memorized_spells .forget {
+  display: inline;
+}
+div.known_spells .forget {
+  display: none;
+}
+div.all_spells .forget {
+  display: none; 
+}
 div.spell {
   font-size: 10pt;
   color: black;
@@ -60,6 +95,7 @@ div.spell .control {
   font-size: 8pt;
 	color: #888;
 }
+
 
 div.spell .name{
   font-size: 12pt;
@@ -96,3 +132,7 @@ div.spell.universal {
   background: #eee;
 }
 
+#state {
+  width: 100%;
+  height: 500px;
+}

@@ -1,9 +1,8 @@
 .spell(id=spell_id class=classes)
   .control
-    Known:
-    %input.known(type='checkbox')
-    Memorized:
-    %input.ready(type='text')
+    %a.learn(href='#') Learn
+    %a.memorize(href='#') Memorize
+    %a.forget(href='#') Forget
   .name=name + " (#{level})"
   - [:school,:components,:casting_time,:targets,:range,:duration,:saving_throw,:description].each do |field|
     %div(class=field)= send(field) 

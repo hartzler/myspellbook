@@ -1,12 +1,26 @@
 .level(id="level-#{level}")
   %a(id="a-#{level}")
     %h3== Level #{level}
-    .stats      
-      Known:
-      %span.known_count 0
-      \|
-      Memorized:
-      %span.ready_count 0
-  - spells.each do |spell|
-    = partial.render(spell)
+  %h4.memorized_header
+    %span.toggle -
+    Memorized
+    (
+    %span.memorized_count 0 
+    )
+  .memorized_spells
+  .endlevel
+  %h4.known_header
+    %span.toggle -
+    Known 
+    (
+    %span.known_count 0
+    )
+  .known_spells
+  .endlevel
+  %h4.all_header 
+    %span.toggle -
+    All
+  .all_spells
+    - spells.each do |spell|
+      = partial.render(spell)
   .endlevel

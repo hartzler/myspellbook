@@ -35,7 +35,7 @@ FasterCSV.foreach("data.csv") do |row|
 
 
     scope=OpenStruct.new(data)
-    scope.spell_id = 'spell-' + data[:name].downcase.gsub(" ",'-')
+    scope.spell_id = 'spell-' + data[:name].downcase.gsub(/[^a-zA-Z0-9]/,'-')
 		scope.description = h(scope.description).gsub("\n","<br>")
     scope.level = scope.send(klass)
 		sources = []
@@ -52,13 +52,6 @@ bylevel = spells.inject({}){|h,f|(h[f.send(klass)]||=[])<<f; h}
 bylevel.keys.sort.each do |level|
   scope = OpenStruct.new(:level=>level,:spells=>bylevel[level],:partial=>partial)
   puts haml.render(scope)
-#  puts "<div id=\"level-#{level}\" class=\"level\">"
-#  puts "<a id=\"a-#{level}\"><h3>Level #{level} <span class=\"known_count\"></span></h3></a>"
-#  bylevel[level].each do |scope|
-#    scope.level = level
-#    puts haml.render(scope)
-#  end
-#	puts "<div class=\"endlevel\"></div></div>"
 end
 
 

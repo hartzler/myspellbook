@@ -1,9 +1,11 @@
 %html
   %head
+    %link(href="bootstrap-1.0.0.css" rel="stylesheet" type="text/css")
+    %link(href="spellbook.less" rel="stylesheet" type="text/css")
     %script(src="jquery.js")
     %script(src="gears_init.js")
     %script(src="spellbook.js")
-    %link(href="spellbook.css" rel="stylesheet" type="text/css")
+    %script(src="less.js")
   %body
     #header
       Spellbook:
@@ -12,7 +14,9 @@
         %option secondary
         %option scrolls
       %a(href='spellbook.html') Wizard
+      |
       %a(href='druid.html') Druid
+      \::::
     #controls
       Filter:
       %select(id='view')
@@ -30,4 +34,8 @@
     #spells
       = open("spells.partial"){|f| f.read}
     #footer
-
+      %a.import(href='#') Import
+      |
+      %a.export(href='#') Export
+      .state
+        %textarea#state
